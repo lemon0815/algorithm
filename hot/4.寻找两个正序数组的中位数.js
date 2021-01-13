@@ -7,7 +7,6 @@
 
 var findMedianSortedArrays = function(nums1, nums2) {
   let i = 0, j = 0;
-  const maxLength = Math.max(nums1.length, nums2.length);
   let arr = [];
   while((i !== nums1.length) && (j !== nums2.length)) {
       if (nums1[i] <= nums2[j]) {
@@ -23,7 +22,6 @@ var findMedianSortedArrays = function(nums1, nums2) {
   } else {
       arr.push(...nums1.slice(i));
   }
-  console.log(arr);
   if (arr.length % 2 === 0) {
       return (arr[arr.length / 2] + arr[arr.length / 2 - 1]) / 2;
   } else {
@@ -31,3 +29,33 @@ var findMedianSortedArrays = function(nums1, nums2) {
   }
 };
 findMedianSortedArrays([1,3], [2])
+
+
+
+var findMedianSortedArrays = function(nums1, nums2) {
+    let i = 0, j = 0;
+    let arr = [];
+    let left = [...nums1, Infinity]
+    let right = [...nums2, Infinity]
+    // 加入哨兵，简化边界条件的判断
+    while(!(left[i] === Infinity && right[j] === Infinity)) {
+        if (left[i] <= right[j]) {
+            arr.push(left[i]);
+            ++i;
+        } else {
+            arr.push(right[j]);
+            ++j;
+        }
+    }
+    if (i === nums1.length) {
+        arr.push(...nums2.slice(j));
+    } else {
+        arr.push(...nums1.slice(i));
+    }
+    if (arr.length % 2 === 0) {
+        return (arr[arr.length / 2] + arr[arr.length / 2 - 1]) / 2;
+    } else {
+        return arr[Math.floor(arr.length / 2)];
+    }
+  };
+  findMedianSortedArrays([1,3], [2])
